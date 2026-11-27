@@ -1,0 +1,118 @@
+{
+    "door": {
+        "comparison_classes": ["cabinet", "window", "closet", "wall", "shower"],
+        "description": ""
+    },
+    "stairs": {
+        "comparison_classes": ["ladder"],
+        "description": ""
+    },
+    "picture": {
+        "comparison_classes": ["mirror", "television", "window"],
+        "description": ""
+    },
+    "window": {
+        "comparison_classes": ["mirror", "picture", "door"],
+        "description": ""
+    },
+    "chair": {
+        "comparison_classes": ["stool", "sofa", "seating", "gym_equipment", "table", "bench", "bag_chair", "headboard", "bar_stool"],
+        "description": "A chair is an independent seating furniture piece that MUST have a backrest and four legs. It is a rigid, hard structure designed for single-person seating. Unlike sofa chairs, a chair has a distinct individual structure and is not part of a larger seating arrangement. The backrest provides vertical support, and the four legs ensure stability and proper elevation from the ground."
+    },
+    "cushion": {
+        "comparison_classes": ["television"],
+        "description": ""
+    },
+    "lighting": {
+        "comparison_classes": ["television", "window"],
+        "description": ""
+    },
+    "cabinet": {
+        "comparison_classes": ["chest_of_drawers", "door_frame", "bookshelf", "window", "wall"],
+        "description": ""
+    },
+    "curtain": {
+        "comparison_classes": ["blinds", "window", "towel"],
+        "description": ""
+    },
+    "table": {
+        "comparison_classes": ["chest_of_drawers", "counter"],
+        "description": ""
+    },
+    "plant": {
+        "comparison_classes": ["lamp", "toy", "bowl", "railing"],
+        "description": "A plant can be of various colors and types, typically displayed in decorative containers or vases. Plants are living organisms with organic forms, featuring leaves, stems, and sometimes flowers in different colors including green, red, yellow, or other vibrant hues. They are commonly placed in pots or vases and positioned near windows, corners, or as decorative elements in indoor spaces."
+    },
+    "mirror": {
+        "comparison_classes": ["window", "picture", "television"],
+        "description": ""
+    },
+    "towel": {
+        "comparison_classes": ["curtain", "cloth"],
+        "description": ""
+    },
+    "sink": {
+        "comparison_classes": ["bathtub"],
+        "description": ""
+    },
+    "book": {
+        "comparison_classes": ["box"],
+        "description": ""
+    },
+    "shelving": {
+        "comparison_classes": ["cabinet", "bookcase", "rack"],
+        "description": ""
+    },
+    "sofa": {
+        "comparison_classes": ["chair", "bed", "sofa_chair", "arm_chair", "lounge_chair", "bench"],
+        "description": "A sofa is NOT a single independent piece like a sofa chair, but rather a rectangular or elongated structure designed for multiple people. It has a cuboid-like shape with a substantial length that distinguishes it from individual chairs. A sofa features a continuous seating surface with armrests and backrest, typically upholstered and designed for comfort in living areas."
+    },
+    "bed": {
+        "comparison_classes": ["sofa", "seating", "chair", "storage_bed", "dressing_table", "sofa_bed", "attoman", "bench", "railing"],
+        "description": "A bed is a large structure, significantly bigger than a sofa, designed for sleeping. It features a substantial rectangular frame with a mattress and is typically adorned with bedding items such as pillows, quilts, and sheets. Unlike sofa cushions, bed pillows are specifically designed for sleeping comfort. The bed's size and the presence of proper bedding items distinguish it from other furniture pieces."
+    },
+    "chest_of_drawers": {
+        "comparison_classes": ["table"],
+        "description": ""
+    },
+    "toilet": {
+        "comparison_classes": ["sink", "bathtub", "trash_can", "statue"],
+        "description": "A toilet MUST be located in a bathroom or restroom environment. It is a plumbing fixture designed for personal hygiene, typically featuring a bowl-shaped structure with a seat and lid. The toilet is an essential bathroom fixture and is always found in bathroom settings, never in living rooms, bedrooms, or other non-bathroom areas."
+    },
+    "stool": {
+        "comparison_classes": ["chair", "table"],
+        "description": ""
+    },
+    "television": {
+        "comparison_classes": ["picture", "window", "computer", "cabinet", "microwave", "radio"],
+        "description": "A television is a large electronic device with a substantial screen size, not a small screen device. It features a prominent rectangular display screen with a frame, typically mounted on a wall or placed on a stand. The television is significantly larger than small electronic devices with screens and is designed for viewing content from a distance in living rooms or bedrooms."
+    },
+    "shower": {
+        "comparison_classes": ["bathtub", "sink", "toilet"],
+        "description": ""
+    },
+    "counter": {
+        "comparison_classes": ["table", "cabinet"],
+        "description": ""
+    },
+    "seating": {
+        "comparison_classes": ["chair", "sofa", "stool"],
+        "description": ""
+    },
+    "fireplace": {
+        "comparison_classes": ["television", "cabinet"],
+        "description": ""
+    },
+    "clothes": {
+        "comparison_classes": ["towel"],
+        "description": ""
+    },
+    "bathtub": {
+        "comparison_classes": ["shower", "sink", "toilet"],
+        "description": ""
+    },
+    "gym_equipment": {
+        "comparison_classes": ["chair", "sofa"],
+        "description": ""
+    }
+}

@@ -1,0 +1,195 @@
+# E2Nav Configuration File
+# 主要参数配置
+
+# 实验参数
+experiment:
+  split_l: 0
+  split_r: 50
+  episode_l: 1
+  episode_r: 2200
+  dataset: "hm3d_v2"
+  experiment_name: "exp1"
+  type: "debug"
+  cuda_id: 0
+  port: 8000
+
+# CLIP特征配置
+use_clip_feature: true  # 是否使用CLIP提取真正的视觉特征（true: CLIP embeddings, false: DINO belief）
+
+# 地图参数
+mapping:
+  map_size_cm: 4000
+  resolution: 5
+  center_pixel: 400  # 计算得出: map_size_cm / resolution / 2
+  camera_horizon: 0
+  dilation_deg: 0
+  collision_threshold: 0.08
+  closing_kernel_size: 15
+  hole_fill_area: 2000
+
+# 高度参数
+height:
+  min_height: -150
+  max_height: 100
+
+# 机器人参数
+robot:
+  radius: 3
+  action_cnt: 0
+
+# 感知参数
+perception:
+  detection_segmentation: true
+  pitch: 0.0
+
+# 检测过滤参数
+detection_filter:
+  mask_area_threshold: 50      # 掩码面积阈值（像素）
+  conf_threshold: 0.35         # 置信度阈值
+  max_bbox_area_ratio: 1.0     # 最大边界框面积比例
+
+# 相似度计算参数
+similarity:
+  min_similarity_thresh: 0.5  # 最小聚合相似度阈值
+  
+  # 智能聚合权重参数
+  overlap_weight: 0.6          # 点云重叠相似度权重（主导权重）
+  visual_sim_weight: 0.4       # 视觉相似度权重（辅助权重）
+  
+  # 距离参数
+  max_match_distance: 1.0      # 最大匹配距离（米），超过此距离强制不匹配
+  distance_threshold: 0.7      # 距离惩罚起始阈值（米），小于此距离无惩罚，大于此距离开始指数衰减
+                                # 建议: distance_threshold < max_match_distance
+                                # 0.3米: 在0.3-0.8米之间平滑惩罚
+  center_distance_decay: 0.8   # 最小点距离衰减因子（米），用于距离相似度计算
+                                # 值越小衰减越快，只有非常接近的点云才有高相似度
+                                # 0.3米: 严格模式，适合精确匹配
+  distance_penalty_strength: 5.0  # 距离惩罚强度（值越大惩罚越严格）
+  
+  # 高视觉相似度boost机制（当视觉很高且距离很近时，降低对重叠的依赖）
+  high_visual_boost_enabled: true       # 是否启用高视觉boost
+  high_visual_threshold: 0.6            # 视觉相似度阈值，超过此值认为是高视觉
+  high_visual_distance_threshold: 0.1   # 距离阈值（米），小于此值认为是近距离
+  high_visual_boost_factor: 0.5         # boost因子，会加到基础相似度上
+  
+  # 当前帧包含关系过滤参数
+  containment_visual_sim_threshold: 0.7  # 视觉相似度阈值，用于判断包含关系是否为同一物品
+                                         # ≥0.5: 判定为同一物品的局部和整体，删除小点云
+                                         # <0.5: 判定为两个不同物体，保留两者
+
+# 语义映射参数
+semantic_mapping:
+  explored:
+    max_height: 150
+    min_height: -10
+    pcd_threshold: 0.0
+  obstacle:
+    max_height: 100
+    min_height: 10
+    pcd_threshold: 0.5
+  high_obstacle:
+    max_height: 100
+    min_height: 90
+  extra_area:
+    max_height: 100
+    min_height: -100
+    pcd_threshold: 0.5
+  upstairs_obstacle:
+    max_height: 100
+    min_height: 90
+  upstairs_free:
+    max_height: 100
+    min_height: -10
+  elevation:
+    slice_point_threshold: 0
+  elevation_gradient:
+    gradient_threshold: 80
+
+# 导航参数
+navigation:
+  point_goal: [400, 400]  # 初始目标点
+  temp_path: []
+  next_goal: [400, 400]
+  state: "BS"  # Broad Search
+
+# 房间参数
+rooms:
+  optional_room_list: 
+    - "living room"
+    - "dining room" 
+    - "bedroom"
+    - "kitchen"
+    - "bathroom"
+    - "entryway"
+    - "study"
+    - "home gym"
+    - "storage room"
+    - "basement"
+    - "balcony"
+    - "garden"
+    - "walk-in closet"
+
+# 客户端参数
+client:
+  # url: "http://10.250.121.68:4444/v1/chat/completions"
+  url: "https://5qceaogjoqmbceqpkmg88kkhc59qkage.openapi-sj.sii.edu.cn/v1/chat/completions"
+
+# 检测参数
+detection:
+  box_threshold: 0.35
+  text_threshold: 0.35
+  iou_threshold: 0.35
+  use_ram: false
+
+# 路径规划参数
+path_planning:
+  centering_weight: 10.0
+  safety_margin: 2
+  max_adjustment_radius: 10
+  start_adjustment_radius: 500
+
+# 骨架提取参数
+skeleton:
+  dilate_kernel: 6
+  min_component_size: 50
+  pruning_iterations: 10
+  min_junction_distance: 15
+
+# 探索参数
+exploration:
+  bfs_radius: 30
+  w_angle: 1.0
+  w_dist: 1.0
+  w_explore: 1.0
+  w_avoid: 1.0
+  max_objects_per_landmark: 5
+  scene_radius: 80
+  num_clusters: 5
+
+# 动作参数
+actions:
+  max_steps: 500
+  turning_angle_threshold: 16
+  navigation_distance_threshold: 15  # 导航距离阈值（像素），用于判断是否已到达point_goal
+  close_distance_threshold: 3
+  very_close_distance_threshold: 20
+  depth_min: 0.5
+  depth_max: 5.0
+
+# 文件路径
+paths:
+  classes_txt: "utils/classes/classes.txt"
+  classes_json: "utils/classes/classes.json"
+  save_dir_base: "observations"
+  exp_dir_base: "exp"
+
+# 调试参数
+debug:
+  save_observations: true
+  save_bbox: true
+  save_maps: true
+  save_elevation: true
+  save_gradient: true
+  save_skeleton: true
+  save_places: true
+  save_origin: true
