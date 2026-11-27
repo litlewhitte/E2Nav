@@ -1,0 +1,22 @@
+datasets/
+data/
+notebooks/
+models/
+observations/
+outputs/
+exp/
+temp/
+docs/
+
+__pycache__/
+*.py[cod]
+.env
+.env.*
+utils/dataset_evaluation.py
+
+# Keep local research notes out of the public tree.
+/*.md
+!/README.md
+
+evaluation_results.json
+run_iii.sh

@@ -1,0 +1,232 @@
+# E2Nav Configuration File
+
+experiment:
+  split_l: 0
+  split_r: 50
+  episode_l: 1
+  episode_r: 2200
+  dataset: "hm3d_v2"
+  experiment_name: "exp1"
+  type: "debug"
+  cuda_id: 0
+  port: 8000
+
+use_clip_feature: true
+
+mapping:
+  map_size_cm: 4500
+  resolution: 4.5
+  center_pixel: 500
+  camera_horizon: 0
+  dilation_deg: 0
+  collision_threshold: 0.08
+  closing_kernel_size: 17  # 15 * 1.111 = 16.67 → 17
+  hole_fill_area: 2469
+
+height:
+  min_height: -150
+  max_height: 100
+
+robot:
+  radius: 4
+  action_cnt: 0
+
+perception:
+  detection_segmentation: true
+  pitch: 0.0
+
+detection_filter:
+  mask_area_threshold: 50
+  conf_threshold: 0.35
+  max_bbox_area_ratio: 1.0
+
+similarity:
+  min_similarity_thresh: 0.5
+  
+  overlap_weight: 0.6
+  visual_sim_weight: 0.4
+  
+  max_match_distance: 1.0
+  distance_threshold: 0.7
+  center_distance_decay: 0.8
+  distance_penalty_strength: 5.0
+  
+  high_visual_boost_enabled: true
+  high_visual_threshold: 0.6
+  high_visual_distance_threshold: 0.1
+  high_visual_boost_factor: 0.5
+  
+  containment_visual_sim_threshold: 0.7
+  
+  hard_constraint_overlap_threshold: 0.05
+  hard_constraint_visual_threshold: 0.3
+
+semantic_mapping:
+  explored:
+    max_height: 150
+    min_height: -10
+    pcd_threshold: 0.0
+  obstacle:
+    max_height: 100
+    min_height: 10
+    pcd_threshold: 0.5
+  high_obstacle:
+    max_height: 100
+    min_height: 90
+  extra_area:
+    max_height: 100
+    min_height: -100
+    pcd_threshold: 0.5
+  upstairs_obstacle:
+    max_height: 100
+    min_height: 90
+  upstairs_free:
+    max_height: 100
+    min_height: -10
+  elevation:
+    slice_point_threshold: 0
+  elevation_gradient:
+    gradient_threshold: 80
+
+navigation:
+  point_goal: [500, 500]
+  temp_path: []
+  next_goal: [500, 500]
+  state: "BS"  # Broad Search
+
+rooms:
+  room_segmentation_delta: 30
+  min_room_area: 300
+  optional_room_list: 
+    - "living room"
+    - "dining room" 
+    - "bedroom"
+    - "kitchen"
+    - "bathroom"
+    - "entryway"
+    - "study"
+    - "home gym"
+    - "storage room"
+    - "basement"
+    - "balcony"
+    - "garden"
+    - "walk-in closet"
+
+client:
+  url: "http://localhost:11434/api/chat"
+  model: "qwen2.5-vl-72b"
+  authorization: "${oc.env:E2NAV_AUTHORIZATION,''}"
+  ollama_url: "${oc.env:E2NAV_CHAT_URL,http://localhost:11434/api/chat}"
+  ollama_model: "${oc.env:E2NAV_CHAT_MODEL,qwen2.5vl:72b}"
+
+detection:
+  box_threshold: 0.35
+  text_threshold: 0.35
+  iou_threshold: 0.35
+  use_ram: false
+
+path_planning:
+  use_hybrid_astar: true
+  
+  centering_weight: 50.0
+  safety_margin: 5
+  max_adjustment_radius: 30
+  start_adjustment_radius: 500
+  high_risk_penalty: 200.0
+  
+  forward_distance: 0.25
+  turn_angle: 30.0
+  theta_resolution: 12
+  goal_arrival_factor: 1.0
+  hybrid_centering_weight: 50.0
+  hybrid_safety_margin: 5
+  hybrid_high_risk_penalty: 200.0
+
+skeleton:
+  dilate_kernel: 7  # 6 * 1.111 = 6.67 → 7
+  min_component_size: 62
+  pruning_iterations: 3
+  min_junction_distance: 17  # 15 * 1.111 = 16.67 → 17
+
+exploration:
+  bfs_radius: 30
+  w_angle: 1.0
+  w_dist: 1.0
+  w_explore: 1.0
+  w_avoid: 1.0
+  max_objects_per_landmark: 5
+  scene_radius: 80
+  num_clusters: 5
+  
+  min_valid_candidate_distance: 20
+  frontier_clustering_distance: 30
+  good_forward_angle_threshold: 90
+  good_forward_distance_threshold: 30
+  top_k_forward_ratio: 0.2
+  
+  navigation_temp_goal_distance: 4  # 3.6 * 1.111 = 4
+  max_turning_count: 5
+  
+  object_destination_radius: 20
+  escape_point_search_radius: 10
+  escape_point_max_distance: 7
+  
+  mcts_iterations: 3000
+  mcts_exploration_weight: 1.0
+  mcts_rollout_visit_ratio: 0.5
+
+actions:
+  max_steps: 500
+  turning_angle_threshold: 16
+  depth_min: 0.5
+  depth_max: 5.0
+
+fsm:
+  max_bs_collision_threshold: 2
+  collision_plus_detection_radius: 3
+  max_collision_escaping_count: 3
+  
+  max_recovery_steps: 100
+  failure_detection_history_length: 20
+  
+  kl_divergence_recheck_threshold: 0.5
+  entropy_threshold_ratio: 0.4
+  max_confirmed_bbox_views: 6
+  min_confirmed_bbox_views: 1
+  
+  
+  bs_replan_distance_threshold: 10
+  
+  navigation_distance_threshold: 17
+  
+  object_close_confirmation_distance: 20
+  object_very_close_distance: 13
+  
+  room_approach_check_distance: 20
+  room_fine_tuning_distance: 10
+  
+  center_change_threshold: 0.1
+  blocked_target_check_interval: 5
+  blocked_target_reachability_radius: 20
+  
+  room_destination_max_radius: 500
+  mandatory_detection_interval: 5
+  bbox_boundary_margin: 10
+  planar_detection_threshold: 1e-4
+  planar_inlier_ratio_threshold: 0.6
+
+paths:
+  classes_txt: "utils/classes/classes.txt"
+  classes_json: "utils/classes/classes.json"
+  save_dir_base: "observations"
+  exp_dir_base: "exp"
+
+debug:
+  save_observations: true
+  save_bbox: true
+  save_maps: true
+  save_elevation: true
+  save_gradient: true
+  save_skeleton: true
+  save_places: true
+  save_origin: true

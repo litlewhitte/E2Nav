@@ -1,0 +1,15 @@
+# Navigation dependencies. Install CUDA-specific packages as described in README.md.
+hydra-core==1.3.2
+numpy<2
+scipy
+scikit-learn
+scikit-image
+opencv-python<4.12
+Pillow
+matplotlib
+requests
+open3d
+open-clip-torch
+kornia
+supervision==0.18.0
+qwen-vl-utils
