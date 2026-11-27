@@ -1,0 +1,118 @@
+{
+    "door": {
+        "comparison_classes": ["cabinet", "window", "closet", "wall", "shower"],
+        "description": ""
+    },
+    "stairs": {
+        "comparison_classes": ["ladder"],
+        "description": ""
+    },
+    "picture": {
+        "comparison_classes": ["mirror", "television", "window"],
+        "description": ""
+    },
+    "window": {
+        "comparison_classes": ["mirror", "picture", "door"],
+        "description": ""
+    },
+    "chair": {
+        "comparison_classes": ["stool", "sofa", "seating", "gym_equipment"],
+        "description": "Used in dining rooms or offices, a chair has a raised seat, vertical backrest, and four legs, sometimes with armrests, characterized by its ergonomic support for single-person seating."
+    },
+    "cushion": {
+        "comparison_classes": ["television"],
+        "description": ""
+    },
+    "lighting": {
+        "comparison_classes": ["television", "window"],
+        "description": ""
+    },
+    "cabinet": {
+        "comparison_classes": ["chest_of_drawers", "door frame", "bookshelf", "window", "wall"],
+        "description": "Typically mounted on walls or standing in kitchens/bathrooms, featuring rectangular structures with doors, shelves, or drawers, identifiable by its enclosed storage and hinges/knobs."
+    },
+    "curtain": {
+        "comparison_classes": ["blinds", "window", "towel"],
+        "description": ""
+    },
+    "table": {
+        "comparison_classes": ["chest_of_drawers", "counter"],
+        "description": ""
+    },
+    "plant": {
+        "comparison_classes": ["lamp"],
+        "description": "Typically displayed indoors near windows or corners, features leafy green foliage or vibrant flowers in varied colors, often potted in decorative containers either placed on floors/shelves or hung in elevated positions like baskets, distinguished by its organic forms and lively hues contrasting with man-made interiors."
+    },
+    "mirror": {
+        "comparison_classes": ["window", "picture", "television"],
+        "description": ""
+    },
+    "towel": {
+        "comparison_classes": ["curtain", "cloth"],
+        "description": ""
+    },
+    "sink": {
+        "comparison_classes": ["bathtub"],
+        "description": ""
+    },
+    "book": {
+        "comparison_classes": ["box"],
+        "description": ""
+    },
+    "shelving": {
+        "comparison_classes": ["cabinet", "bookcase", "rack"],
+        "description": ""
+    },
+    "sofa": {
+        "comparison_classes": ["chair", "bed", "sofa_chair"],
+        "description": "Found in living areas, a sofa is a long upholstered seat, typically rectangular rather than square in shape, with padded armrests and a high backrest, distinguished by its cushioned seating for multiple people and fabric or leather exterior."
+    },
+    "bed": {
+        "comparison_classes": ["sofa", "seating", "chair"],
+        "description": "Commonly positioned in bedrooms, features a rectangular frame with a mattress topped by bedding such as quilts and pillows, characterized by its standardized length and width designed for horizontal sleeping and its elevated structure above the floor."
+    },
+    "chest_of_drawers": {
+        "comparison_classes": ["table"],
+        "description": "Usually found in bedrooms or closets, structured as a vertical, multi-tiered unit with stacked horizontal drawers, recognized by its handles/knobs and rectangular, waist-high frame."
+    },
+    "toilet": {
+        "comparison_classes": ["sink", "bathtub"],
+        "description": ""
+    },
+    "stool": {
+        "comparison_classes": ["chair", "table"],
+        "description": ""
+    },
+    "television": {
+        "comparison_classes": ["picture", "mirror", "window"],
+        "description": "Commonly positioned in living rooms or bedrooms, a television features a large rectangular screen framed by a slim border, often mounted on a wall or stand."
+    },
+    "shower": {
+        "comparison_classes": ["bathtub", "sink", "toilet"],
+        "description": ""
+    },
+    "counter": {
+        "comparison_classes": ["table", "cabinet"],
+        "description": "Usually seen in kitchens or stores, is a long, flat surface often built on top of cabinets or fixtures, and is distinguished by its extended length and use for tasks like preparing food or serving customers."
+    },
+    "seating": {
+        "comparison_classes": ["chair", "sofa", "stool"],
+        "description": ""
+    },
+    "fireplace": {
+        "comparison_classes": ["television", "cabinet"],
+        "description": ""
+    },
+    "clothes": {
+        "comparison_classes": ["towel"],
+        "description": ""
+    },
+    "bathtub": {
+        "comparison_classes": ["shower", "sink", "toilet"],
+        "description": ""
+    },
+    "gym_equipment": {
+        "comparison_classes": ["chair", "sofa"],
+        "description": ""
+    }
+}

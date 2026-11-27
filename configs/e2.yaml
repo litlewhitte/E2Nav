@@ -1,0 +1,286 @@
+# E2Nav Configuration File
+# 主要参数配置
+
+# 实验参数
+experiment:
+  split_l: 0
+  split_r: 50
+  episode_l: 1
+  episode_r: 2200
+  dataset: "hm3d_v2"
+  experiment_name: "exp1"
+  type: "debug"
+  cuda_id: 0
+  port: 8000
+
+# CLIP特征配置
+use_clip_feature: true  # 是否使用CLIP提取真正的视觉特征（true: CLIP embeddings, false: DINO belief）
+
+# 地图参数
+mapping:
+  map_size_cm: 4000
+  resolution: 5
+  center_pixel: 400  # 计算得出: map_size_cm / resolution / 2
+  camera_horizon: 0
+  dilation_deg: 0
+  collision_threshold: 0.08
+  closing_kernel_size: 15
+  hole_fill_area: 2000
+
+# 高度参数
+height:
+  min_height: -150
+  max_height: 100
+
+# 机器人参数
+robot:
+  radius: 3
+  action_cnt: 0
+
+# 感知参数
+perception:
+  detection_segmentation: true
+  pitch: 0.0
+
+# 检测过滤参数
+detection_filter:
+  mask_area_threshold: 50      # 掩码面积阈值（像素）
+  conf_threshold: 0.35         # 置信度阈值
+  max_bbox_area_ratio: 1.0     # 最大边界框面积比例
+
+# 相似度计算参数
+similarity:
+  min_similarity_thresh: 0.5  # 最小聚合相似度阈值
+  
+  # 智能聚合权重参数
+  overlap_weight: 0.6          # 点云重叠相似度权重（主导权重）
+  visual_sim_weight: 0.4       # 视觉相似度权重（辅助权重）
+  
+  # 距离参数
+  max_match_distance: 1.0      # 最大匹配距离（米），超过此距离强制不匹配
+  distance_threshold: 0.7      # 距离惩罚起始阈值（米），小于此距离无惩罚，大于此距离开始指数衰减
+                                # 建议: distance_threshold < max_match_distance
+                                # 0.3米: 在0.3-0.8米之间平滑惩罚
+  center_distance_decay: 0.8   # 最小点距离衰减因子（米），用于距离相似度计算
+                                # 值越小衰减越快，只有非常接近的点云才有高相似度
+                                # 0.3米: 严格模式，适合精确匹配
+  distance_penalty_strength: 5.0  # 距离惩罚强度（值越大惩罚越严格）
+  
+  # 高视觉相似度boost机制（当视觉很高且距离很近时，降低对重叠的依赖）
+  high_visual_boost_enabled: true       # 是否启用高视觉boost
+  high_visual_threshold: 0.6            # 视觉相似度阈值，超过此值认为是高视觉
+  high_visual_distance_threshold: 0.1   # 距离阈值（米），小于此值认为是近距离
+  high_visual_boost_factor: 0.5         # boost因子，会加到基础相似度上
+  
+  # 当前帧包含关系过滤参数
+  containment_visual_sim_threshold: 0.7  # 视觉相似度阈值，用于判断包含关系是否为同一物品
+                                         # ≥0.5: 判定为同一物品的局部和整体，删除小点云
+                                         # <0.5: 判定为两个不同物体，保留两者
+  
+  # 硬约束阈值（用于scenegraph.py的调试输出）
+  hard_constraint_overlap_threshold: 0.05  # 无重叠判断阈值
+  hard_constraint_visual_threshold: 0.3  # 低视觉判断阈值
+
+# 语义映射参数
+semantic_mapping:
+  explored:
+    max_height: 150
+    min_height: -10
+    pcd_threshold: 0.0
+  obstacle:
+    max_height: 100
+    min_height: 10
+    pcd_threshold: 0.5
+  high_obstacle:
+    max_height: 100
+    min_height: 90
+  extra_area:
+    max_height: 100
+    min_height: -100
+    pcd_threshold: 0.5
+  upstairs_obstacle:
+    max_height: 100
+    min_height: 90
+  upstairs_free:
+    max_height: 100
+    min_height: -10
+  elevation:
+    slice_point_threshold: 0
+  elevation_gradient:
+    gradient_threshold: 80
+
+# 导航参数
+navigation:
+  point_goal: [400, 400]  # 初始目标点（应等于center_pixel）
+  temp_path: []
+  next_goal: [400, 400]  # 初始下一个目标点（应等于center_pixel）
+  state: "BS"  # Broad Search
+
+# 房间参数
+rooms:
+  optional_room_list: 
+    - "living room"
+    - "dining room" 
+    - "bedroom"
+    - "kitchen"
+    - "bathroom"
+    - "entryway"
+    - "study"
+    - "home gym"
+    - "storage room"
+    - "basement"
+    - "balcony"
+    - "garden"
+    - "walk-in closet"
+
+# 客户端参数
+client:
+  # url: "https://qoojh8bcjp9hcdgpkdmcbc8jgjkh98bq.openapi-sj.sii.edu.cn/v1/chat/completions"
+  # model: "Qwen3-VL-235B-A22B-Instruct"
+
+
+  url: "https://5qceaogjoqmbceqpkmg88kkhc59qkage.openapi-sj.sii.edu.cn/v1/chat/completions"
+  model: "qwen2.5-vl-72b"
+  authorization: "${oc.env:E2NAV_AUTHORIZATION,''}"
+
+  
+
+# 检测参数
+detection:
+  box_threshold: 0.35
+  text_threshold: 0.35
+  iou_threshold: 0.35
+  use_ram: false
+
+# 路径规划参数
+path_planning:
+  # 规划器选择
+  use_hybrid_astar: false  # true: 使用Hybrid A*,  false: 使用传统A*
+  
+  # A* 专用参数
+  centering_weight: 50.0   # 居中代价权重
+  safety_margin: 5         # 高风险区膨胀半径
+  max_adjustment_radius: 30
+  start_adjustment_radius: 500
+  high_risk_penalty: 50.0 # 高风险代价
+  
+  # Hybrid A* 专用参数
+  # 运动学参数
+  forward_distance: 0.25  # 每步前进距离（米）
+  turn_angle: 30.0  # 每次转向角度（度）
+  theta_resolution: 12  # 角度离散化：12份=每30度（必须与turn_angle匹配）
+  goal_arrival_factor: 1.0  # 到达阈值倍数（1.0倍forward_distance，约5像素/0.25米）
+  # 代价参数
+  hybrid_centering_weight: 20.0   # Hybrid A*居中代价权重
+  hybrid_safety_margin: 3         # Hybrid A*高风险区膨胀半径
+  hybrid_high_risk_penalty: 50.0 # Hybrid A*高风险代价
+
+# 骨架提取参数
+skeleton:
+  dilate_kernel: 6
+  min_component_size: 50
+  pruning_iterations: 3
+  min_junction_distance: 15
+
+# 探索参数
+exploration:
+  bfs_radius: 30
+  w_angle: 1.0
+  w_dist: 1.0
+  w_explore: 1.0
+  w_avoid: 1.0
+  max_objects_per_landmark: 5
+  scene_radius: 80
+  num_clusters: 5
+  
+  # Frontier选择相关
+  min_valid_candidate_distance: 20  # 最小有效候选点距离（像素）
+  frontier_clustering_distance: 30  # frontier聚类距离（像素）
+  good_forward_angle_threshold: 90  # 好的前进方向角度阈值（度）
+  good_forward_distance_threshold: 30  # 好的前进方向距离阈值（像素）
+  top_k_forward_ratio: 0.2  # 检查前k%角度最小的候选点
+  
+  # 导航相关
+  navigation_temp_goal_distance: 3.6  # 导航临时目标距离（像素）
+  max_turning_count: 5  # BS状态最大转圈次数
+  
+  # 物体目标相关
+  object_destination_radius: 20  # 物体目标搜索半径（像素）
+  escape_point_search_radius: 10  # 逃脱点搜索半径（像素）
+  escape_point_max_distance: 7  # 逃脱点最大距离（像素）
+  
+  # MCTS相关
+  mcts_iterations: 3000  # MCTS最大迭代次数
+  mcts_exploration_weight: 0.5  # MCTS探索权重（UCT公式中的c）
+  mcts_rollout_visit_ratio: 0.5  # MCTS rollout访问比例（访问多少比例的candidates后停止）
+
+# 动作参数
+actions:
+  max_steps: 500
+  turning_angle_threshold: 16  # 左转/右转的角度阈值（度），超过此角度才转向
+  depth_min: 0.5
+  depth_max: 5.0
+
+# FSM状态机参数
+fsm:
+  # ========== 碰撞相关 ==========
+  max_bs_collision_threshold: 2  # BS状态：同一point_goal最大允许碰撞次数，超过则触发replan
+  collision_plus_detection_radius: 3  # 碰撞+检测半径（像素）
+  max_collision_escaping_count: 3  # CE状态：最大连续后退次数
+  
+  # ========== 恢复机制 ==========
+  max_recovery_steps: 100  # RC状态：最大回退步数
+  failure_detection_history_length: 20  # 卡死检测：历史轨迹长度（步数）
+  
+  # ========== 物体确认相关 ==========
+  kl_divergence_recheck_threshold: 0.5  # KL散度重新检查阈值
+  entropy_threshold_ratio: 0.4  # 熵阈值比例（相对于max_entropy）
+  max_confirmed_bbox_views: 6  # 最大确认bbox视图数量
+  min_confirmed_bbox_views: 1  # 最小确认bbox视图数量（用于判断>0）
+  
+  # ========== FSM状态转换距离阈值（像素）==========
+  # 说明：这些阈值控制FSM状态转换和行为判断
+  
+  # BS状态导航判断
+  bs_replan_distance_threshold: 10  # BS→重新规划：到达point_goal此距离内时转圈并重新选择frontier
+  
+  # AO/AR状态导航判断
+  navigation_distance_threshold: 18  # AO→CO、AR→AO：判断是否到达point_goal的距离阈值
+  
+  # 物体接近判断（CO状态使用）
+  object_close_confirmation_distance: 20  # CO→最终确认判断1：碰撞时检查distance(agent, obj_pcd) < 20，足够接近则进行VLM最终确认
+  object_very_close_distance: 12  # CO→最终确认判断2：检查distance(agent, point_goal) < 10，非常接近时触发最终确认流程
+  
+  # 房间接近判断（AR状态使用）
+  room_approach_check_distance: 20  # AR→AO：接近房间中心到此距离时检测物品并可能转到AO状态
+  room_fine_tuning_distance: 10  # AR状态：房间位置微调距离（未明确使用）
+  
+  # ========== 被遮挡目标检测 ==========
+  center_change_threshold: 0.1  # center变化阈值（米），用于判断物体是否有新检测融合
+  blocked_target_check_interval: 5  # 检查被遮挡目标间隔（步数）
+  blocked_target_reachability_radius: 20  # 检查被遮挡目标可达性半径（像素）
+  
+  # ========== 其他 ==========
+  room_destination_max_radius: 500  # AR状态：房间目标点最大搜索半径（像素）
+  mandatory_detection_interval: 5  # BS状态：强制VLM检测间隔（步数）
+  bbox_boundary_margin: 20  # AP状态：bbox边界容差（像素），用于判断是否需要主动感知
+  planar_detection_threshold: 1e-4  # 平面检测：RANSAC距离阈值（米）
+  planar_inlier_ratio_threshold: 0.6  # 平面检测：内点比例阈值
+
+# 文件路径
+paths:
+  classes_txt: "utils/classes/classes.txt"
+  classes_json: "utils/classes/classes.json"
+  save_dir_base: "observations"
+  exp_dir_base: "exp"
+
+# 调试参数
+debug:
+  save_observations: true
+  save_bbox: true
+  save_maps: true
+  save_elevation: true
+  save_gradient: true
+  save_skeleton: true
+  save_places: true
+  save_origin: true
